@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Snackbar.make(findViewById(R.id.main_app_view), "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return true;
         }
 
