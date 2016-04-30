@@ -1,6 +1,8 @@
 package com.yashdalfthegray.repeatingreminders.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextClock;
@@ -9,24 +11,49 @@ import android.widget.TextView;
 import com.yashdalfthegray.repeatingreminders.R;
 import com.yashdalfthegray.repeatingreminders.models.Reminder;
 
+import java.util.List;
+
 /**
  * Created by Yash Kulshrestha on 4/21/2016.
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ReminderViewHolder> {
 
+    private List<Reminder> mData;
+    private LayoutInflater mInflater;
+
+    public RecyclerAdapter(Context context, List<Reminder> data) {
+        this.mData = data;
+        this.mInflater = LayoutInflater.from(context);
+    }
+
     @Override
     public RecyclerAdapter.ReminderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = mInflater.inflate(R.layout.reminder_item, parent, false);
+        ReminderViewHolder holder = new ReminderViewHolder(view);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerAdapter.ReminderViewHolder holder, int position) {
-
+        Reminder currentObj = mData.get(position);
+        holder.setData(currentObj, position);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return this.mData.size();
+    }
+
+    public void addItem(int position, Reminder reminder) {
+        mData.add(position, reminder);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, mData.size());
+    }
+
+    public void removeItem(int position) {
+        mData.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mData.size());
     }
 
     class ReminderViewHolder extends RecyclerView.ViewHolder {
