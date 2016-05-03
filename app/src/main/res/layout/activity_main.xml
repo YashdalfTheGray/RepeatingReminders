@@ -33,6 +33,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_black_24dp"
         android:background="@color/colorAccent"
+        app:rippleColor="@color/colorIcons"
         android:tint="@color/colorIcons"/>
 
 </android.support.design.widget.CoordinatorLayout>
