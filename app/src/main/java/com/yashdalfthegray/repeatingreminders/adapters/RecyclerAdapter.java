@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yashdalfthegray.repeatingreminders.R;
@@ -65,6 +66,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
 
         TextView title, reminderText;
         ImageButton editReminderButton;
+        LinearLayout itemLinearLayout;
         int position;
         Reminder current;
         Resources res;
@@ -73,6 +75,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
             super(itemView);
             res = itemView.getResources();
 
+            itemLinearLayout = (LinearLayout) itemView.findViewById(R.id.reminder_item_container);
             title = (TextView) itemView.findViewById(R.id.reminder_title);
             reminderText = (TextView) itemView.findViewById(R.id.reminder_text);
             editReminderButton = (ImageButton) itemView.findViewById(R.id.button_edit_reminder);
@@ -87,7 +90,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
             this.editReminderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v.getRootView().findViewById(R.id.main_app_view), "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    Snackbar.make(v.getRootView().findViewById(R.id.main_app_view), "You tried to edit a list item!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+            });
+            this.itemLinearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Snackbar.make(v.getRootView().findViewById(R.id.main_app_view), "You clicked on a list item!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
             });
         }
