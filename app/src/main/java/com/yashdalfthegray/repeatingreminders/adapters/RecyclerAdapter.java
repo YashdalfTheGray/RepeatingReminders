@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yashdalfthegray.repeatingreminders.MainActivity;
 import com.yashdalfthegray.repeatingreminders.R;
 import com.yashdalfthegray.repeatingreminders.models.Reminder;
 
@@ -64,6 +65,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
 
     class ReminderViewHolder extends RecyclerView.ViewHolder {
 
+        private final static String TAG = "ReminderViewHolder";
+
         TextView title, reminderText;
         ImageButton editReminderButton;
         LinearLayout itemLinearLayout;
@@ -96,7 +99,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
             this.itemLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v.getRootView().findViewById(R.id.main_app_view), "You clicked on a list item!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    MainActivity.showNotification(v.getContext());
                 }
             });
         }
