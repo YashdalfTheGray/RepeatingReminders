@@ -7,8 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.yashdalfthegray.repeatingreminders.MainActivity;
@@ -36,8 +35,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
     @Override
     public RecyclerAdapter.ReminderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.reminder_item, parent, false);
-        ReminderViewHolder holder = new ReminderViewHolder(view);
-        return holder;
+        return new ReminderViewHolder(view);
     }
 
     @Override
@@ -67,9 +65,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
 
         private final static String TAG = "ReminderViewHolder";
 
-        TextView title, reminderText;
-        ImageButton editReminderButton;
-        LinearLayout itemLinearLayout;
+        TextView title, subtitle, reminderText;
+        Button enableReminderButton, editReminderButton;
         int position;
         Reminder current;
         Resources res;
@@ -78,28 +75,34 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Remind
             super(itemView);
             res = itemView.getResources();
 
-            itemLinearLayout = (LinearLayout) itemView.findViewById(R.id.reminder_item_container);
             title = (TextView) itemView.findViewById(R.id.reminder_title);
+            subtitle = (TextView) itemView.findViewById(R.id.reminder_subtitle);
             reminderText = (TextView) itemView.findViewById(R.id.reminder_text);
-            editReminderButton = (ImageButton) itemView.findViewById(R.id.button_edit_reminder);
+            editReminderButton = (Button) itemView.findViewById(R.id.button_reminder_edit);
+            enableReminderButton = (Button) itemView.findViewById(R.id.button_reminder_enable);
         }
 
         public void setData(Reminder currentObj, final int position) {
             this.current = currentObj;
             this.position = position;
+
             this.title.setText(current.getTitle());
+            this.subtitle.setText(R.string.reminder_subtitle);
+
             SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
             this.reminderText.setText(String.format(res.getString(R.string.reminder_text), sdf.format(new Date()), sdf.format(new Date())));
+
             this.editReminderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Snackbar.make(v.getRootView().findViewById(R.id.main_app_view), "You tried to edit a list item!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
             });
-            this.itemLinearLayout.setOnClickListener(new View.OnClickListener() {
+
+            this.enableReminderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.showNotification(v.getContext());
+                    MainActivity.showNotification(v.getContext(), "Test Reminder", "Reminder");
                 }
             });
         }
