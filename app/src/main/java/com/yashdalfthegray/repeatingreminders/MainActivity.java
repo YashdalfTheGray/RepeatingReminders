@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.yashdalfthegray.repeatingreminders.adapters.RecyclerAdapter;
+import com.yashdalfthegray.repeatingreminders.lib.SwipeableRecyclerViewTouchListener;
 import com.yashdalfthegray.repeatingreminders.models.Reminder;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "You tried to add an item!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -45,11 +45,38 @@ public class MainActivity extends AppCompatActivity {
     private void setupRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reminders_recycler);
         adapter = new RecyclerAdapter(this, Reminder.getData());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        SwipeableRecyclerViewTouchListener srvtl = new SwipeableRecyclerViewTouchListener(recyclerView, new SwipeableRecyclerViewTouchListener.SwipeListener() {
+            @Override
+            public boolean canSwipeLeft(int position) {
+                return true;
+            }
+
+            @Override
+            public boolean canSwipeRight(int position) {
+                return true;
+            }
+
+            @Override
+            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                for (int p : reverseSortedPositions) {
+                    adapter.removeItem(p);
+                }
+            }
+
+            @Override
+            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                for (int p : reverseSortedPositions) {
+                    adapter.removeItem(p);
+                }
+            }
+        });
+
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
         assert recyclerView != null;
         recyclerView.setAdapter(adapter);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.addOnItemTouchListener(srvtl);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
@@ -69,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Snackbar.make(findViewById(R.id.main_app_view), "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            Snackbar.make(findViewById(R.id.main_app_view), "You tried to go into settings!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return true;
         }
 
