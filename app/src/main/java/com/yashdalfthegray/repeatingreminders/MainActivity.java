@@ -2,6 +2,7 @@ package com.yashdalfthegray.repeatingreminders;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Snackbar.make(findViewById(R.id.main_app_view), "You tried to go into settings!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
