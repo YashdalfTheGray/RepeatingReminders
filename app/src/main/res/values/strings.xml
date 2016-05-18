@@ -7,4 +7,5 @@
     <string name="button_reminder_edit">edit</string>
     <string name="reminder_subtitle">Daily Reminder</string>
     <string name="button_reminder_enable">Enable</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
